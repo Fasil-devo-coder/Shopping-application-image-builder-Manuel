@@ -10,7 +10,7 @@ data "aws_ami" "application_image" {
 
   filter {
     name   = "name"
-    values = ["${var.var.project_name}-${var.project_environment}-*"]
+    values = ["${var.project_name}-${var.project_environment}-*"]
   }
 
   filter {
@@ -20,7 +20,7 @@ data "aws_ami" "application_image" {
 
   filter {
     name   = "tag:Project"
-    values = [ var.var.project_name]
+    values = [ var.project_name]
   }
 
 }
