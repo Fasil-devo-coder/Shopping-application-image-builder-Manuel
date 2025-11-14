@@ -5,40 +5,41 @@ on:
 
 jobs:
   image-build-job:
-
     runs-on: ubuntu-latest
+
     env:
-      AWS_ACCESS_KEY_ID= ${{ secrets.access_key }}
-      AWS_SECRET_ACCESS_KEY= ${{ secrets.secrete_key }}
-      AWS_REGION="ap-northeast-1"
-      PACKER_VERSION="1.13.5"   
+      AWS_ACCESS_KEY_ID: ${{ secrets.access_key }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.secrete_key }}
+      AWS_REGION: "ap-northeast-1"
+      TERRAFORM_VERSION: "1.8.5"
 
     steps:
 
       - name: "Checkout source code"
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
 
-      - name: "Installing terraform"
-      - uses: hashicorp/setup-terraform@v3
+      - name: "Installing Terraform"
+        uses: hashicorp/setup-terraform@v3
         with:
-          version: ${{ env.TERRAFORM_VERSION }}
-              
-      - name: "Terraform init"
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+      - name: "Terraform Init"
         run: terraform init
         working-directory: ./terraform/
 
-      - name:  "fmt Terraform"
+      - name: "Terraform Fmt"
         run: terraform fmt
         working-directory: ./terraform/
 
-      - name:  "Valid Terraform"
+      - name: "Terraform Validate"
         run: terraform validate
         working-directory: ./terraform/
 
-      - name:  "Plan Terraform"
+      - name: "Terraform Plan"
         run: terraform plan
         working-directory: ./terraform/
 
-      - name:  "Apply Terraform"
-        run: terraform apply auto-approve
+      - name: "Terraform Apply"
+        run: terraform apply -auto-approve
         working-directory: ./terraform/
+
