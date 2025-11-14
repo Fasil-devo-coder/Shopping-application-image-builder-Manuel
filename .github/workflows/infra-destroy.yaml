@@ -1,0 +1,37 @@
+name: "Destroy infrastructure with Terraform"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  destroy-infra:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.access_key }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.secrete_key }}
+      AWS_REGION: "ap-northeast-1"
+      TERRAFORM_VERSION: "1.13.5"
+
+    steps:
+
+      - name: "Checkout source code"
+        uses: actions/checkout@v4
+
+      - name: "Setup Terraform"
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+      - name: "Terraform Init"
+        run: terraform init
+        working-directory: ./terraform/
+
+      - name: "Terraform Validate"
+        run: terraform validate
+        working-directory: ./terraform/
+
+      - name: "Terraform Destroy"
+        run: terraform destroy -auto-approve
+        working-directory: ./terraform/
+
