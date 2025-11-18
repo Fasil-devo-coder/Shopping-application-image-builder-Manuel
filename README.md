@@ -158,6 +158,8 @@ packer build packer/app-template.json
 ---
 
 ## 📞 Support
-For any issues, open a GitHub issue or contact the maintainer.
+For any issues, open a GitHub issue or contact me.
++91 7306068637
+sanjufasil12thbridge@gmail.com
 
 ---
